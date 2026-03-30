@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Request a Delivery – Bay Area Express</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ========== STICKY HEADER ========== -->
+  <header class="header" id="header">
+    <div class="container header-inner">
+
+      <a href="index.html" class="logo">
+        <img src="bayex_logo.svg" alt="Bay Area Express" class="logo-img">
+      </a>
+
+      <nav class="nav" id="nav">
+        <a href="index.html#services">Services</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#area">Area</a>
+        <a href="index.html#contact">Contact</a>
+        <a href="request.html" class="nav-active">Request Delivery</a>
+      </nav>
+
+      <a href="tel:+17072657702" class="header-phone">(707) 265-7702</a>
+      <a href="tel:+17072657702" class="btn btn-accent header-cta">Call Now</a>
+
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ========== PAGE HERO ========== -->
+  <section class="page-hero">
+    <div class="container">
+      <h1>Request a Delivery</h1>
+      <p>Fill out the form below and we'll confirm your pickup details. For immediate service, call <a href="tel:+17072657702">(707) 265-7702</a>.</p>
+    </div>
+  </section>
+
+  <!-- ========== DELIVERY REQUEST FORM ========== -->
+  <section class="request-section">
+    <div class="container">
+      <div class="request-inner">
+
+        <!-- Side info panel -->
+        <div class="request-info">
+          <div class="request-info-block">
+            <h3>Immediate Service</h3>
+            <a href="tel:+17072657702" class="contact-phone">(707) 265-7702</a>
+          </div>
+          <div class="request-info-block">
+            <h3>Typical Response</h3>
+            <p>We confirm requests within 30 minutes during business hours.</p>
+          </div>
+          <div class="request-info-block">
+            <h3>Hours</h3>
+            <p>Daily: 8:00 AM – 5:00 PM</p>
+          </div>
+          <div class="request-info-block">
+            <h3>Email</h3>
+            <p><a href="mailto:randy@bayexdelivery.com">randy@bayexdelivery.com</a></p>
+          </div>
+          <div class="request-tip">
+            <span class="tip-icon">&#9888;</span>
+            Need it <strong>right now?</strong> Call us — the form is for scheduled or non-urgent requests.
+          </div>
+        </div>
+
+        <!-- Delivery request form -->
+        <form class="delivery-form" id="deliveryForm" novalidate>
+
+          <fieldset class="form-section">
+            <legend>Your Information</legend>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="req-name">Name <span class="req">*</span></label>
+                <input type="text" id="req-name" name="name" required autocomplete="name">
+              </div>
+              <div class="form-group">
+                <label for="req-company">Company</label>
+                <input type="text" id="req-company" name="company" autocomplete="organization">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="req-phone">Phone <span class="req">*</span></label>
+                <input type="tel" id="req-phone" name="phone" required autocomplete="tel">
+              </div>
+              <div class="form-group">
+                <label for="req-email">Email</label>
+                <input type="email" id="req-email" name="email" autocomplete="email">
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="form-section">
+            <legend>Delivery Details</legend>
+            <div class="form-group">
+              <label for="req-pickup">Pickup Address <span class="req">*</span></label>
+              <input type="text" id="req-pickup" name="pickup_address" required
+                placeholder="Street, City, State" autocomplete="off">
+            </div>
+            <div class="form-group">
+              <label for="req-delivery">Delivery Address <span class="req">*</span></label>
+              <input type="text" id="req-delivery" name="delivery_address" required
+                placeholder="Street, City, State" autocomplete="off">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="req-pickup-time">Requested Pickup Time <span class="req">*</span></label>
+                <input type="datetime-local" id="req-pickup-time" name="pickup_time" required>
+              </div>
+              <div class="form-group">
+                <label for="req-service">Service Type <span class="req">*</span></label>
+                <select id="req-service" name="service_type" required>
+                  <option value="" disabled selected>Select a service type…</option>
+                  <option value="Standard Delivery">Standard Delivery</option>
+                  <option value="Refrigerated">Refrigerated</option>
+                  <option value="Heavy Load">Heavy Load</option>
+                  <option value="Long Haul">Long Haul</option>
+                  <option value="Fragile / Breakable">Fragile / Breakable</option>
+                  <option value="Medical / Lab Samples">Medical / Lab Samples</option>
+                  <option value="Legal Documents">Legal Documents</option>
+                  <option value="Court Filing">Court Filing</option>
+                  <option value="Bank Deposit">Bank Deposit</option>
+                  <option value="Wine Delivery">Wine Delivery</option>
+                  <option value="Other">Other (describe below)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Shown only when "Other" is selected -->
+            <div class="form-group" id="customServiceGroup" hidden>
+              <label for="req-custom-service">Describe Your Service <span class="req">*</span></label>
+              <input type="text" id="req-custom-service" name="custom_service"
+                placeholder="Brief description of what you need…">
+            </div>
+
+            <div class="form-group">
+              <label for="req-notes">Additional Notes</label>
+              <textarea id="req-notes" name="notes" rows="4"
+                placeholder="Package size, special handling instructions, access codes, anything we should know…"></textarea>
+            </div>
+          </fieldset>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-accent btn-lg">Submit Delivery Request</button>
+            <p class="form-disclaimer">We'll reach out to confirm details. For immediate pickup, call us directly.</p>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-main">
+        <p class="footer-brand">Bay Area Express</p>
+        <p><a href="tel:+17072657702">(707) 265-7702</a></p>
+        <p>753 Jefferson St, Napa, CA 94559</p>
+        <p>Licensed &amp; Insured</p>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Bay Area Express. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

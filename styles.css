@@ -178,6 +178,18 @@ ul  { list-style: none; }
 }
 .nav a:hover { color: var(--red); }
 
+.nav-request {
+  color: var(--red) !important;
+  font-weight: 700 !important;
+}
+.nav-request:hover { color: var(--red-dark) !important; }
+
+/* Active state for current page */
+.nav-active {
+  color: var(--red) !important;
+  font-weight: 700 !important;
+}
+
 /* Phone number in header */
 .header-phone {
   font-size: 1.1rem;
@@ -743,4 +755,161 @@ ul  { list-style: none; }
     font-size: 0.8rem;
     padding: 6px 12px;
   }
+}
+
+/* ========================================================
+   PAGE HERO — request.html and other inner pages
+   ======================================================== */
+.page-hero {
+  background: var(--navy);
+  color: var(--white);
+  padding: 52px 0 44px;
+}
+
+.page-hero h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  margin-bottom: 10px;
+}
+
+.page-hero p {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.72);
+  max-width: 520px;
+  line-height: 1.65;
+}
+
+.page-hero p a {
+  color: var(--white);
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+/* ========================================================
+   DELIVERY REQUEST FORM PAGE
+   ======================================================== */
+.request-section {
+  padding: var(--section-py) 0;
+}
+
+.request-inner {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+/* Side info panel */
+.request-info-block {
+  margin-bottom: 24px;
+}
+
+.request-info-block h3 {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--gray-400);
+  margin-bottom: 4px;
+}
+
+.request-info-block p {
+  font-size: 0.95rem;
+  color: var(--navy);
+  line-height: 1.6;
+}
+
+.request-info-block a {
+  color: var(--red);
+}
+.request-info-block a:hover { text-decoration: underline; }
+
+.request-tip {
+  background: #fff8e1;
+  border: 1px solid #ffe082;
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  font-size: 0.85rem;
+  color: var(--gray-800);
+  line-height: 1.5;
+  margin-top: 8px;
+}
+
+.tip-icon {
+  margin-right: 4px;
+}
+
+/* Form fieldsets */
+.delivery-form {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.form-section {
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius);
+  padding: 24px 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form-section legend {
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--gray-400);
+  padding: 0 6px;
+}
+
+.form-group select {
+  font-family: var(--font);
+  font-size: 0.95rem;
+  padding: 10px 14px;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius);
+  background: var(--white);
+  color: var(--navy);
+  transition: border-color 0.2s;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239ca3af' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+  cursor: pointer;
+}
+
+.form-group select:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(43,108,176,0.1);
+}
+
+.form-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form-disclaimer {
+  font-size: 0.82rem;
+  color: var(--gray-400);
+  line-height: 1.5;
+}
+
+/* ========================================================
+   RESPONSIVE — request page
+   ======================================================== */
+@media (max-width: 900px) {
+  .request-inner {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .page-hero h1 { font-size: 1.6rem; }
+  .form-section { padding: 18px 16px 14px; }
 }
