@@ -3,6 +3,16 @@
    Mobile nav toggle + contact form feedback. Nothing else.
    ============================================================= */
 
+// ===== Promo banner close =====
+var promoClose = document.getElementById('promoClose');
+var promoBanner = document.getElementById('promoBanner');
+
+if (promoClose && promoBanner) {
+  promoClose.addEventListener('click', function () {
+    promoBanner.style.display = 'none';
+  });
+}
+
 // ===== Mobile navigation toggle =====
 var toggle = document.getElementById('mobileToggle');
 var nav = document.getElementById('nav');
