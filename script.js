@@ -1,13 +1,9 @@
 /* =============================================================
    Bay Area Express — Script
-   Mobile nav toggle + Supabase form submissions.
+   Mobile nav toggle + form submissions via Edge Function.
    ============================================================= */
 
-// ===== Supabase client =====
-var supabase = window.supabase.createClient(
-  'https://kwkrbxgnbcbqqmdznobf.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt3a3JieGduYmNicXFtZHpub2JmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzMjY5MTAsImV4cCI6MjA5MDkwMjkxMH0.XZTTHIGc9hy7j9Fm-m8dZrxTCUU55f2STlObCs8lI9M'
-);
+var SUBMIT_URL = 'https://kwkrbxgnbcbqqmdznobf.supabase.co/functions/v1/submit-form';
 
 // ===== Mobile navigation toggle =====
 var toggle = document.getElementById('mobileToggle');
@@ -32,31 +28,47 @@ if (form) {
   form.addEventListener('submit', async function (e) {
     e.preventDefault();
 
-    // Honeypot check — bots fill this in, real users don't
+    // Honeypot check
     if (document.getElementById('website').value) return;
+
+    // Get Turnstile token
+    var turnstileToken = form.querySelector('[name="cf-turnstile-response"]');
+    if (!turnstileToken || !turnstileToken.value) {
+      showToast('Please complete the verification.');
+      return;
+    }
 
     var btn = form.querySelector('button[type="submit"]');
     btn.disabled = true;
     btn.textContent = 'Sending…';
 
-    var { error } = await supabase.from('contact_submissions').insert({
-      name: document.getElementById('name').value,
-      company: document.getElementById('company').value || null,
-      phone: document.getElementById('phone').value,
-      email: document.getElementById('email').value || null,
-      details: document.getElementById('details').value || null
+    var res = await fetch(SUBMIT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        table: 'contact_submissions',
+        turnstileToken: turnstileToken.value,
+        data: {
+          name: document.getElementById('name').value,
+          company: document.getElementById('company').value || null,
+          phone: document.getElementById('phone').value,
+          email: document.getElementById('email').value || null,
+          details: document.getElementById('details').value || null
+        }
+      })
     });
 
     btn.disabled = false;
     btn.textContent = 'Submit Request';
 
-    if (error) {
-      showToast('Something went wrong. Please call us at (707) 265-7702.');
-      console.error('Supabase error:', error);
+    if (!res.ok) {
+      var err = await res.json().catch(function () { return {}; });
+      showToast(err.error || 'Something went wrong. Please call us at (707) 265-7702.');
     } else {
       var name = document.getElementById('name').value;
       showToast('Thank you, ' + name + '. We\'ll be in touch shortly.');
       form.reset();
+      turnstile.reset(form.querySelector('.cf-turnstile'));
     }
   });
 }
@@ -83,35 +95,51 @@ if (deliveryForm) {
     // Honeypot check
     if (document.getElementById('req-website').value) return;
 
+    // Get Turnstile token
+    var turnstileToken = deliveryForm.querySelector('[name="cf-turnstile-response"]');
+    if (!turnstileToken || !turnstileToken.value) {
+      showToast('Please complete the verification.');
+      return;
+    }
+
     var btn = deliveryForm.querySelector('button[type="submit"]');
     btn.disabled = true;
     btn.textContent = 'Sending…';
 
-    var { error } = await supabase.from('delivery_requests').insert({
-      name: document.getElementById('req-name').value,
-      company: document.getElementById('req-company').value || null,
-      phone: document.getElementById('req-phone').value,
-      email: document.getElementById('req-email').value || null,
-      pickup_address: document.getElementById('req-pickup').value,
-      delivery_address: document.getElementById('req-delivery').value,
-      pickup_time: document.getElementById('req-pickup-time').value,
-      service_type: document.getElementById('req-service').value,
-      custom_service: document.getElementById('req-custom-service').value || null,
-      notes: document.getElementById('req-notes').value || null
+    var res = await fetch(SUBMIT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        table: 'delivery_requests',
+        turnstileToken: turnstileToken.value,
+        data: {
+          name: document.getElementById('req-name').value,
+          company: document.getElementById('req-company').value || null,
+          phone: document.getElementById('req-phone').value,
+          email: document.getElementById('req-email').value || null,
+          pickup_address: document.getElementById('req-pickup').value,
+          delivery_address: document.getElementById('req-delivery').value,
+          pickup_time: document.getElementById('req-pickup-time').value,
+          service_type: document.getElementById('req-service').value,
+          custom_service: document.getElementById('req-custom-service').value || null,
+          notes: document.getElementById('req-notes').value || null
+        }
+      })
     });
 
     btn.disabled = false;
     btn.textContent = 'Submit Delivery Request';
 
-    if (error) {
-      showToast('Something went wrong. Please call us at (707) 265-7702.');
-      console.error('Supabase error:', error);
+    if (!res.ok) {
+      var err = await res.json().catch(function () { return {}; });
+      showToast(err.error || 'Something went wrong. Please call us at (707) 265-7702.');
     } else {
       var name = document.getElementById('req-name').value;
       showToast('Request received, ' + name + '. We\'ll confirm your pickup shortly.');
       deliveryForm.reset();
       customGroup.hidden = true;
       customInput.required = false;
+      turnstile.reset(deliveryForm.querySelector('.cf-turnstile'));
     }
   });
 }
