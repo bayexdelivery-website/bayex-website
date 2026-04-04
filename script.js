@@ -62,10 +62,7 @@ if (form) {
       var err = await res.json().catch(function () { return {}; });
       showToast(err.error || 'Something went wrong. Please call us at (707) 265-7702.');
     } else {
-      var name = document.getElementById('name').value;
-      showToast('Thank you, ' + name + '. We\'ll be in touch shortly.');
-      form.reset();
-      if (typeof turnstile !== 'undefined') turnstile.reset(form.querySelector('.cf-turnstile'));
+      window.location.href = 'confirmation.html';
     }
   });
 }
@@ -128,12 +125,7 @@ if (deliveryForm) {
       var err = await res.json().catch(function () { return {}; });
       showToast(err.error || 'Something went wrong. Please call us at (707) 265-7702.');
     } else {
-      var name = document.getElementById('req-name').value;
-      showToast('Request received, ' + name + '. We\'ll confirm your pickup shortly.');
-      deliveryForm.reset();
-      customGroup.hidden = true;
-      customInput.required = false;
-      if (typeof turnstile !== 'undefined') turnstile.reset(deliveryForm.querySelector('.cf-turnstile'));
+      window.location.href = 'confirmation.html';
     }
   });
 }

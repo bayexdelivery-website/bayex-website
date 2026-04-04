@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Request Received – Bay Area Express</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .confirmation {
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .confirmation-card {
+      max-width: 520px;
+    }
+    .confirmation-icon {
+      font-size: 64px;
+      margin-bottom: 16px;
+    }
+    .confirmation-card h1 {
+      font-size: 2rem;
+      color: var(--navy);
+      margin-bottom: 12px;
+    }
+    .confirmation-card p {
+      font-size: 1.1rem;
+      color: var(--gray-600);
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+    .redirect-note {
+      font-size: 0.9rem;
+      color: var(--gray-400);
+      margin-top: 24px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========== STICKY HEADER ========== -->
+  <header class="header" id="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <img src="bayex_logo.svg" alt="Bay Area Express" class="logo-img">
+      </a>
+      <nav class="nav" id="nav">
+        <a href="index.html#services">Services</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#area">Area</a>
+        <a href="index.html#contact">Contact</a>
+        <a href="request.html">Request Delivery</a>
+      </nav>
+      <a href="tel:+17072657702" class="header-phone">(707) 265-7702</a>
+      <a href="tel:+17072657702" class="btn btn-accent header-cta">Call Now</a>
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ========== CONFIRMATION ========== -->
+  <section class="confirmation">
+    <div class="confirmation-card">
+      <div class="confirmation-icon">&#9989;</div>
+      <h1>Request Received!</h1>
+      <p>Thank you for reaching out to Bay Area Express. We've received your submission and will be in touch shortly to confirm the details.</p>
+      <p>For immediate service, call us at <a href="tel:+17072657702"><strong>(707) 265-7702</strong></a>.</p>
+      <a href="index.html" class="btn btn-accent btn-lg">Back to Home</a>
+      <p class="redirect-note">You'll be redirected to the home page in <span id="countdown">10</span> seconds.</p>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-main">
+        <p class="footer-brand">Bay Area Express</p>
+        <p><a href="tel:+17072657702">(707) 265-7702</a></p>
+        <p>753 Jefferson St, Napa, CA 94559</p>
+        <p>Licensed &amp; Insured</p>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Bay Area Express. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Countdown and redirect
+    var seconds = 10;
+    var countdownEl = document.getElementById('countdown');
+    var timer = setInterval(function () {
+      seconds--;
+      countdownEl.textContent = seconds;
+      if (seconds <= 0) {
+        clearInterval(timer);
+        window.location.href = 'index.html';
+      }
+    }, 1000);
+
+    // Mobile nav toggle
+    var toggle = document.getElementById('mobileToggle');
+    var nav = document.getElementById('nav');
+    toggle.addEventListener('click', function () { nav.classList.toggle('open'); });
+  </script>
+</body>
+</html>
