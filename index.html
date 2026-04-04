@@ -320,6 +320,11 @@
             <textarea id="details" name="details" rows="4"
               placeholder="Pickup address, destination, package type, preferred time..."></textarea>
           </div>
+          <!-- Honeypot — hidden from real users -->
+          <div class="form-group" style="position:absolute;left:-9999px" aria-hidden="true">
+            <label for="website">Website</label>
+            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+          </div>
           <button type="submit" class="btn btn-accent btn-lg">Submit Request</button>
         </form>
       </div>
@@ -341,6 +346,7 @@
     </div>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="script.js"></script>
 </body>
 </html>
