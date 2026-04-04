@@ -28,23 +28,25 @@ Deno.serve(async (req) => {
       );
     }
 
-    // Verify Turnstile token
-    const verifyRes = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({
-        secret: TURNSTILE_SECRET,
-        response: turnstileToken,
-      }),
-    });
+    // Verify Turnstile token if provided (graceful fallback if browser blocks it)
+    if (turnstileToken) {
+      const verifyRes = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+          secret: TURNSTILE_SECRET,
+          response: turnstileToken,
+        }),
+      });
 
-    const verifyData = await verifyRes.json();
+      const verifyData = await verifyRes.json();
 
-    if (!verifyData.success) {
-      return new Response(
-        JSON.stringify({ error: "Verification failed. Please try again." }),
-        { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-      );
+      if (!verifyData.success) {
+        return new Response(
+          JSON.stringify({ error: "Verification failed. Please try again." }),
+          { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
     }
 
     // Insert into database using service role (bypasses RLS)

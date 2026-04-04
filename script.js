@@ -31,12 +31,9 @@ if (form) {
     // Honeypot check
     if (document.getElementById('website').value) return;
 
-    // Get Turnstile token
-    var turnstileToken = form.querySelector('[name="cf-turnstile-response"]');
-    if (!turnstileToken || !turnstileToken.value) {
-      showToast('Please complete the verification.');
-      return;
-    }
+    // Get Turnstile token (optional — browser may block it)
+    var turnstileInput = form.querySelector('[name="cf-turnstile-response"]');
+    var turnstileToken = turnstileInput ? turnstileInput.value : null;
 
     var btn = form.querySelector('button[type="submit"]');
     btn.disabled = true;
@@ -47,7 +44,7 @@ if (form) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         table: 'contact_submissions',
-        turnstileToken: turnstileToken.value,
+        turnstileToken: turnstileToken || null,
         data: {
           name: document.getElementById('name').value,
           company: document.getElementById('company').value || null,
@@ -68,7 +65,7 @@ if (form) {
       var name = document.getElementById('name').value;
       showToast('Thank you, ' + name + '. We\'ll be in touch shortly.');
       form.reset();
-      turnstile.reset(form.querySelector('.cf-turnstile'));
+      if (typeof turnstile !== 'undefined') turnstile.reset(form.querySelector('.cf-turnstile'));
     }
   });
 }
@@ -95,12 +92,9 @@ if (deliveryForm) {
     // Honeypot check
     if (document.getElementById('req-website').value) return;
 
-    // Get Turnstile token
-    var turnstileToken = deliveryForm.querySelector('[name="cf-turnstile-response"]');
-    if (!turnstileToken || !turnstileToken.value) {
-      showToast('Please complete the verification.');
-      return;
-    }
+    // Get Turnstile token (optional — browser may block it)
+    var turnstileInput = deliveryForm.querySelector('[name="cf-turnstile-response"]');
+    var turnstileToken = turnstileInput ? turnstileInput.value : null;
 
     var btn = deliveryForm.querySelector('button[type="submit"]');
     btn.disabled = true;
@@ -111,7 +105,7 @@ if (deliveryForm) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         table: 'delivery_requests',
-        turnstileToken: turnstileToken.value,
+        turnstileToken: turnstileToken || null,
         data: {
           name: document.getElementById('req-name').value,
           company: document.getElementById('req-company').value || null,
@@ -139,7 +133,7 @@ if (deliveryForm) {
       deliveryForm.reset();
       customGroup.hidden = true;
       customInput.required = false;
-      turnstile.reset(deliveryForm.querySelector('.cf-turnstile'));
+      if (typeof turnstile !== 'undefined') turnstile.reset(deliveryForm.querySelector('.cf-turnstile'));
     }
   });
 }
